@@ -1,0 +1,8 @@
+body {
+  display: flex;
+}
+
+.container {
+  margin: 0 auto; /*center*/
+  max-width: 90%;
+}
