@@ -18,3 +18,7 @@ body {
   flex-wrap: wrap;
   cursor: pointer;
 }
+
+.cell {
+  width: 30%;
+}

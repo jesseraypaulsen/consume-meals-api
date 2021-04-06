@@ -50,18 +50,20 @@ const grid = document.createElement('div');
 grid.classList.add('grid');
 
 function fetchMealsByCategory(e) {
+  // clear grid
+  grid.innerHTML = ``; 
   // filter by category
-  grid.innerHTML = ``;
   fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${e.target.value}`)
     .then(res => res.json())
     .then(res => {
       res.meals.map(meal => {
         const {strMeal, strMealThumb, idMeal } = meal;
         const cell = document.createElement('div');
+        cell.classList.add('cell');
         cell.addEventListener('click', () => { displayMeal(idMeal) });
         cell.dataset.id = idMeal;
         cell.style = { display: "flex", flexDirection: "column", border: "1px solid black" };
-        cell.innerHTML = `<span>${strMeal}</span> <img src="${strMealThumb}" style="width: 100px; height: 100px;">`;
+        cell.innerHTML = `<span style="font-size:16px;">${strMeal}</span> <img src="${strMealThumb}" style="width: 100px; height: 100px;">`;
         grid.appendChild(cell);
       })
       el.appendChild(grid);
@@ -74,5 +76,10 @@ function displayMeal(id) {
     .then(res => res.json())
     .then(res => {
       console.log(JSON.stringify(res));
+      const meal = document.createElement('div');
+      meal.classList.add('meal');
+      meal.innerHTML = res.meals[0]["strInstructions"];
+      console.log(res.meals[0]["strInstructions"]);
+      el.appendChild(meal);
     })
 }
