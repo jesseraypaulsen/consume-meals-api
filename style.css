@@ -9,5 +9,5 @@ body {
 #container {
   margin: 0 auto; /*center*/
   width: 90%;
-  border: 1px solid navy;
+  border: 1px dotted white;
 }
