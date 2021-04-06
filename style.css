@@ -2,10 +2,11 @@ body {
   display: flex;
   height: 100vh;
   margin: 0;
-  /* font-family: '' */
+  font-family: "Helvetica neue", Helvetica, sans-serif;
+  background: linear-gradient(to bottom, blue, purple);
 }
 
-.container {
+#container {
   margin: 0 auto; /*center*/
   width: 90%;
   border: 1px solid navy;
