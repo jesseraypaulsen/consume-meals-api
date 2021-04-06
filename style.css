@@ -11,3 +11,10 @@ body {
   width: 90%;
   border: 1px dotted white;
 }
+
+.grid {
+  width: 99%;
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+}

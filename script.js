@@ -47,7 +47,7 @@ function createMenu(categories) {
 }
 
 const grid = document.createElement('div');
-grid.style = { display: "flex", flexWrap: "wrap", width: "99%" };
+grid.classList.add('grid');
 
 function fetchMealsByCategory(e) {
   // filter by category
@@ -55,17 +55,24 @@ function fetchMealsByCategory(e) {
   fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${e.target.value}`)
     .then(res => res.json())
     .then(res => {
-      console.log(JSON.stringify(res));
-      //res.meals -> array of objects
-      // strMeal, strMealThumb, idMeal
       res.meals.map(meal => {
         const {strMeal, strMealThumb, idMeal } = meal;
         const cell = document.createElement('div');
+        cell.addEventListener('click', () => { displayMeal(idMeal) });
         cell.dataset.id = idMeal;
         cell.style = { display: "flex", flexDirection: "column", border: "1px solid black" };
-        cell.innerHTML = `<h3>${strMeal}</h3> <img src="${strMealThumb}" style="width: 100px; height: 100px;">`;
+        cell.innerHTML = `<span>${strMeal}</span> <img src="${strMealThumb}" style="width: 100px; height: 100px;">`;
         grid.appendChild(cell);
       })
       el.appendChild(grid);
     });
+}
+
+function displayMeal(id) {
+  el.removeChild(grid);
+  fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then(res => res.json())
+    .then(res => {
+      console.log(JSON.stringify(res));
+    })
 }
