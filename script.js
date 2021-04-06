@@ -36,6 +36,7 @@ function processCategories(catArray) {
 //create select menu where categories are the options
 function createMenu(categories) {
   const menu = document.createElement('select');
+  menu.addEventListener('click', fetchMealsByCategory);
   categories.forEach(cat => {
     const option = document.createElement('option');
     option.value = cat;
@@ -45,13 +46,11 @@ function createMenu(categories) {
   el.appendChild(menu);
 }
 
-// function fetchMealsByCategory() {
-//   categories.forEach(catObj => {
-//     // filter by category
-//     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${catObj['strCategory']}`)
-//       .then(res => res.json())
-//       .then(res => {
-//         console.log(`${catObj['strCategory']} -> ${JSON.stringify(res)}`);
-//       });
-//   })
-// }
+function fetchMealsByCategory(e) {
+  // filter by category
+  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${e.target.value}`)
+    .then(res => res.json())
+    .then(res => {
+      console.log(JSON.stringify(res));
+    });
+}
