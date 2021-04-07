@@ -69,11 +69,10 @@ function fetchMealsByCategory(e) {
 }
 
 function displayMeal(id) {
-
+  // empty the container
   removeAllChildNodes(el);
-
+  // change layout of container
   el.classList.add('meal');
-
   if (el.classList.contains('grid')) {
     el.classList.remove('grid');
   }
@@ -81,9 +80,36 @@ function displayMeal(id) {
   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
     .then(res => res.json())
     .then(res => {
-      console.log(JSON.stringify(res));
-      el.innerHTML = res.meals[0]["strInstructions"];
-    })
+      const meal = res.meals[0];
+      el.innerHTML = parseMeal(meal);
+    });
+}
+
+//https://www.florin-pop.com/blog/2019/09/random-meal-generator/
+function parseMeal(meal) {
+  const { strMeal, strCategory, strArea, strInstructions, strMealThumb, strTags, strSource } = meal;
+  const ingredients = [];
+
+  	// Get all ingredients from the object. Up to 20
+	for (let i = 1; i <= 20; i++) {
+		if (meal[`strIngredient${i}`]) {
+			ingredients.push(
+				`${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`
+			);
+		} else {
+			// Stop if there are no more ingredients
+			break;
+		}
+	}
+
+  return `<h2>${strMeal}</h2>
+    <img src=${strMealThumb} height='300px' width='300px'}>
+    <div>Category: ${strCategory}</div>
+    <div>Region: ${strArea}</div>
+    <ul>${ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
+    <p>${strInstructions}</p>
+    ${ strTags ? `<div>Tags: ${strTags}</div>` : '' }
+    ${ strSource ? `<div>Source: ${strSource}</div>` : '' }`;
 }
 
 //https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
