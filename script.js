@@ -1,7 +1,7 @@
 
 // https://www.themealdb.com/api.php
 document.body.onload = consume;
-const el = document.querySelector('#container');
+const el = document.querySelector('#main');
 
 function consume() {
   getCategories();
@@ -34,7 +34,7 @@ function processCategories(catArray) {
 
 //create select menu where categories are the options
 function createMenu(categories) {
-  const menu = document.createElement('select');
+  const menu = document.getElementById('catmenu');
   menu.addEventListener('click', fetchMealsByCategory);
   categories.forEach(cat => {
     const option = document.createElement('option');
@@ -42,17 +42,16 @@ function createMenu(categories) {
     option.innerText = cat;
     menu.appendChild(option);
   });
-  el.appendChild(menu);
 }
 
-const grid = document.createElement('div');
-grid.classList.add('grid');
-
 function fetchMealsByCategory(e) {
-  // clear container
-  // el.innerHTML = ``;
-  // clear meal grid
-  removeAllChildNodes(grid);
+  removeAllChildNodes(el);
+  el.classList.add('grid');
+
+  if (el.classList.contains('meal')) {
+    el.classList.remove('meal');
+  }
+
   // filter by category
   fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${e.target.value}`)
     .then(res => res.json())
@@ -64,23 +63,26 @@ function fetchMealsByCategory(e) {
         cell.addEventListener('click', () => { displayMeal(idMeal) });
         cell.dataset.id = idMeal;
         cell.innerHTML = `<span style="font-size:16px;">${strMeal}</span> <img src="${strMealThumb}" style="width: 100px; height: 100px;">`;
-        grid.appendChild(cell);
+        el.appendChild(cell);
       })
-      el.appendChild(grid);
     });
 }
 
 function displayMeal(id) {
-  el.removeChild(grid);
+
+  removeAllChildNodes(el);
+
+  el.classList.add('meal');
+
+  if (el.classList.contains('grid')) {
+    el.classList.remove('grid');
+  }
+
   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
     .then(res => res.json())
     .then(res => {
       console.log(JSON.stringify(res));
-      const meal = document.createElement('div');
-      meal.classList.add('meal');
-      meal.innerHTML = res.meals[0]["strInstructions"];
-      console.log(res.meals[0]["strInstructions"]);
-      el.appendChild(meal);
+      el.innerHTML = res.meals[0]["strInstructions"];
     })
 }
 
