@@ -17,9 +17,8 @@ function getCategories() {
   fetch(`https://www.themealdb.com/api/json/v1/1/list.php?c=list`)
     .then(res => res.json())
     .then(res => {
-      return processCategories(res.meals);
-      //fetchMealsByCategory();       //if something gets returned here, and we chain another promise,
-    })                                //does the returned value become the arg for the next promise?
+      return processCategories(res.meals); // promise chain. the returned value here becomes the
+    })                                     // argument for the next callback.
     .then(cats => createMenu(cats))
     .catch(err => {
       console.warn(err);
@@ -50,19 +49,20 @@ const grid = document.createElement('div');
 grid.classList.add('grid');
 
 function fetchMealsByCategory(e) {
-  // clear grid
-  grid.innerHTML = ``; 
+  // clear container
+  // el.innerHTML = ``;
+  // clear meal grid
+  removeAllChildNodes(grid);
   // filter by category
   fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${e.target.value}`)
     .then(res => res.json())
     .then(res => {
       res.meals.map(meal => {
-        const {strMeal, strMealThumb, idMeal } = meal;
+        const { strMeal, strMealThumb, idMeal } = meal;
         const cell = document.createElement('div');
         cell.classList.add('cell');
         cell.addEventListener('click', () => { displayMeal(idMeal) });
         cell.dataset.id = idMeal;
-        cell.style = { display: "flex", flexDirection: "column", border: "1px solid black" };
         cell.innerHTML = `<span style="font-size:16px;">${strMeal}</span> <img src="${strMealThumb}" style="width: 100px; height: 100px;">`;
         grid.appendChild(cell);
       })
@@ -82,4 +82,11 @@ function displayMeal(id) {
       console.log(res.meals[0]["strInstructions"]);
       el.appendChild(meal);
     })
+}
+
+//https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
 }

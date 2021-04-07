@@ -3,7 +3,7 @@ body {
   height: 100vh;
   margin: 0;
   font-family: "Helvetica neue", Helvetica, sans-serif;
-  background: linear-gradient(to bottom, blue, purple);
+  background: #bbc7a4;
 }
 
 #container {
@@ -17,8 +17,16 @@ body {
   display: flex;
   flex-wrap: wrap;
   cursor: pointer;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-content: space-between;
 }
 
 .cell {
-  width: 30%;
+  /* background: #dcf763; */
+  background: #d6dbd2;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
 }
