@@ -1,15 +1,14 @@
 body {
   display: flex;
+  flex-direction: column;
   height: 100vh;
   margin: 0;
-  font-family: "Helvetica neue", Helvetica, sans-serif;
+  font-family: 'New Tegomin', serif;
   background: #bbc7a4;
 }
 
-.container {
-  margin: 0 auto; /*center*/
-  width: 90%;
-  border: 1px dotted white;
+nav {
+  padding: 30px;
 }
 
 .grid {
@@ -17,18 +16,21 @@ body {
   display: flex;
   flex-wrap: wrap;
   cursor: pointer;
-  justify-content: space-between;
-  align-items: flex-end;
+  justify-content: space-around;
+  align-items: center;
   align-content: space-between;
 }
 
 .cell {
   /* background: #dcf763; */
   background: #d6dbd2;
-  width: 150px;
+  height: 215px;
+  flex-basis: 180px;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   padding: 20px;
+  border: 1px solid black;
 }
 
 .meal {

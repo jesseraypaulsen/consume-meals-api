@@ -1,7 +1,7 @@
 
 // https://www.themealdb.com/api.php
 document.body.onload = consume;
-const el = document.querySelector('#main');
+const el = document.querySelector('.main');
 
 function consume() {
   getCategories();
@@ -102,14 +102,22 @@ function parseMeal(meal) {
 		}
 	}
 
-  return `<h2>${strMeal}</h2>
-    <img src=${strMealThumb} height='300px' width='300px'}>
-    <div>Category: ${strCategory}</div>
-    <div>Region: ${strArea}</div>
-    <ul>${ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
-    <p>${strInstructions}</p>
-    ${ strTags ? `<div>Tags: ${strTags}</div>` : '' }
-    ${ strSource ? `<div>Source: ${strSource}</div>` : '' }`;
+  return `
+    <h1>${strMeal}</h1>
+    <div style="display:flex;">
+      <div>
+        <img src=${strMealThumb} height='300px' width='300px'}>    
+        <div>Category: ${strCategory}</div>
+        <div>Region: ${strArea}</div>
+        ${ strTags ? `<div>Tags: ${strTags}</div>` : '' }
+      </div>
+      <div>
+        <ul>${ingredients.map(i => `<li>${i}</li>`).join('')}</ul>
+      </div>
+    </div>
+    <p style="width:650px">${strInstructions}</p>
+    ${ strSource ? `<div>Source: ${strSource}</div>` : '' }
+  `;
 }
 
 //https://www.javascripttutorial.net/dom/manipulating/remove-all-child-nodes/
