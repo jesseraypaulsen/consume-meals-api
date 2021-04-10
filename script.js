@@ -1,7 +1,7 @@
 
 // https://www.themealdb.com/api.php
 document.body.onload = consume;
-const el = document.querySelector('.main');
+const el = document.querySelector('#main');
 
 function consume() {
   getCategories();
